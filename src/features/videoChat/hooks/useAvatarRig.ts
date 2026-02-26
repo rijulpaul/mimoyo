@@ -4,7 +4,7 @@ import * as THREE from "three";
 import * as Kalidokit from "kalidokit";
 import { mediaPipeService } from "../services/mediapipe";
 // import { RotationSmoother } from "../utils/math";
-import * as boneMap from "/public/avatars/AnimeGirlKawaii/AnimeGirlKawaii_BoneMap.json";
+import boneMap from "/public/avatars/AnimeGirlKawaii/AnimeGirlKawaii_BoneMap.json";
 import calculateArmAngles from "../utils/armAngles";
 
 interface AvatarRigProps {
@@ -43,7 +43,7 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
         if (!isReady || !video) return;
 
         frameRef.current++;
-        const cycle = frameRef.current % 2;
+        const cycle = frameRef.current % 3;
 
         // =========================
         // FACE
@@ -64,7 +64,7 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
 
             const r = faceRig.head.degrees;
             const euler = new THREE.Euler(
-                -THREE.MathUtils.degToRad(r.x + 10),
+                -THREE.MathUtils.degToRad(r.x),
                 -THREE.MathUtils.degToRad(r.y),
                 THREE.MathUtils.degToRad(r.z),
                 "XYZ"
@@ -139,12 +139,13 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
         // =========================
         if (cycle === 2) {
             const handResult = mediaPipeService.trackHand(video);
+            // console.log(handResult);
             if (!handResult?.landmarks?.length) return;
 
-            const { landmarks, handednesses } = handResult;
+            const { landmarks, handedness } = handResult;
 
             for (let i = 0; i < landmarks.length; i++) {
-                const side = handednesses?.[i]?.[0]?.categoryName === "Left" ? "Right" : "Left";
+                const side = handedness?.[i]?.[0]?.categoryName === "Left" ? "Right" : "Left";
                 const solved = Kalidokit.Hand.solve(landmarks[i], side);
                 if (!solved) continue;
 
@@ -167,7 +168,7 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
                     );
 
                     const q = new THREE.Quaternion().setFromEuler(euler);
-                    handBone.quaternion.slerp(q, 0.2);
+                    handBone.quaternion.slerp(q, 0.1);
                 }
             }
         }

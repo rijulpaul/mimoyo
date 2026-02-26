@@ -146,30 +146,30 @@ function calculateArmAngles(landmarks) {
     /**
      * Calculate angle between two vectors
      */
-    function angleBetweenVectors(v1, v2) {
-        const v1Norm = vectorNormalize(v1);
-        const v2Norm = vectorNormalize(v2);
+    // function angleBetweenVectors(v1, v2) {
+    //     const v1Norm = vectorNormalize(v1);
+    //     const v2Norm = vectorNormalize(v2);
 
-        let dot = vectorDot(v1Norm, v2Norm);
-        // Clamp to prevent NaN from floating point errors
-        dot = Math.max(-1, Math.min(1, dot));
+    //     let dot = vectorDot(v1Norm, v2Norm);
+    //     // Clamp to prevent NaN from floating point errors
+    //     dot = Math.max(-1, Math.min(1, dot));
 
-        const angle = Math.acos(dot);
-        return angle * (180 / Math.PI);
-    }
+    //     const angle = Math.acos(dot);
+    //     return angle * (180 / Math.PI);
+    // }
 
     // Extract landmarks
     // LEFT ARM
     const leftShoulder = getLandmark3D(11);
     const leftElbow = getLandmark3D(13);
     const leftWrist = getLandmark3D(15);
-    const leftHip = getLandmark3D(23);
+    // const leftHip = getLandmark3D(23);
 
     // RIGHT ARM
     const rightShoulder = getLandmark3D(12);
     const rightElbow = getLandmark3D(14);
     const rightWrist = getLandmark3D(16);
-    const rightHip = getLandmark3D(24);
+    // const rightHip = getLandmark3D(24);
 
     // Calculate LEFT ARM rotations
     const leftUpperArmAbsolute = getEulerAngles(leftShoulder, leftElbow);
@@ -187,28 +187,28 @@ function calculateArmAngles(landmarks) {
 
     // Calculate practical angles for reference
     // Left elbow flexion
-    const leftUpperArmVec = vectorSubtract(leftElbow, leftShoulder);
-    const leftForearmVec = vectorSubtract(leftWrist, leftElbow);
-    const leftElbowFlexion = 180 - angleBetweenVectors(
-        { x: -leftUpperArmVec.x, y: -leftUpperArmVec.y, z: -leftUpperArmVec.z },
-        leftForearmVec
-    );
+    // const leftUpperArmVec = vectorSubtract(leftElbow, leftShoulder);
+    // const leftForearmVec = vectorSubtract(leftWrist, leftElbow);
+    // const leftElbowFlexion = 180 - angleBetweenVectors(
+    //     { x: -leftUpperArmVec.x, y: -leftUpperArmVec.y, z: -leftUpperArmVec.z },
+    //     leftForearmVec
+    // );
 
     // Right elbow flexion
-    const rightUpperArmVec = vectorSubtract(rightElbow, rightShoulder);
-    const rightForearmVec = vectorSubtract(rightWrist, rightElbow);
-    const rightElbowFlexion = 180 - angleBetweenVectors(
-        { x: -rightUpperArmVec.x, y: -rightUpperArmVec.y, z: -rightUpperArmVec.z },
-        rightForearmVec
-    );
+    // const rightUpperArmVec = vectorSubtract(rightElbow, rightShoulder);
+    // const rightForearmVec = vectorSubtract(rightWrist, rightElbow);
+    // const rightElbowFlexion = 180 - angleBetweenVectors(
+    //     { x: -rightUpperArmVec.x, y: -rightUpperArmVec.y, z: -rightUpperArmVec.z },
+    //     rightForearmVec
+    // );
 
-    // Left shoulder abduction
-    const leftTorsoVec = vectorSubtract(leftShoulder, leftHip);
-    const leftShoulderAbduction = angleBetweenVectors(leftTorsoVec, leftUpperArmVec) - 90;
+    // // Left shoulder abduction
+    // const leftTorsoVec = vectorSubtract(leftShoulder, leftHip);
+    // const leftShoulderAbduction = angleBetweenVectors(leftTorsoVec, leftUpperArmVec) - 90;
 
-    // Right shoulder abduction
-    const rightTorsoVec = vectorSubtract(rightShoulder, rightHip);
-    const rightShoulderAbduction = angleBetweenVectors(rightTorsoVec, rightUpperArmVec) - 90;
+    // // Right shoulder abduction
+    // const rightTorsoVec = vectorSubtract(rightShoulder, rightHip);
+    // const rightShoulderAbduction = angleBetweenVectors(rightTorsoVec, rightUpperArmVec) - 90;
 
     // Return results
     return {
