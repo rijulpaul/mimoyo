@@ -48,7 +48,7 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
                 poseRest.current[bone] = modelBone.quaternion.clone();
             }
         }
-    }, [isReady, nodes]);
+    }, [isReady, boneMap, nodes]);
 
     useFrame(() => {
         const video = videoRef.current;
