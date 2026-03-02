@@ -16,11 +16,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
+          
+      - run: git lfs pull
       - run: npm install
       - run: npm run build
 
