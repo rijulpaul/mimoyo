@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as kalidokit from "kalidokit";
 
 class KalidokitService {
@@ -7,21 +8,23 @@ class KalidokitService {
         this.videoElement = videoElement;
     }
 
-    solveFace(faceLandmarks: []) {
+    solveFace(faceLandmarks: any) {
+        if (!faceLandmarks || !faceLandmarks[0]) return undefined;
         return kalidokit.Face.solve(faceLandmarks[0], {
             runtime: "mediapipe",
-            video: this.videoElement,
+            video: this.videoElement as HTMLVideoElement,
         });
     }
 
-    solvePose(poseLandmarks: []) {
+    solvePose(poseLandmarks: any) {
+        if (!poseLandmarks || !poseLandmarks[0]) return undefined;
         return kalidokit.Pose.solve(poseLandmarks[0], {
             runtime: "mediapipe",
-            video: this.videoElement,
-        });
+            video: this.videoElement as HTMLVideoElement,
+        } as any);
     }
 
-    solveHands(handLandmarks: []) {
+    solveHands(handLandmarks: any) {
         type HandRig = {
             Left?: kalidokit.THand<kalidokit.Side> | undefined;
             Right?: kalidokit.THand<kalidokit.Side> | undefined;

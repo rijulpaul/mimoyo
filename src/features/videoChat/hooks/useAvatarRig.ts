@@ -1,11 +1,13 @@
-import { useRef, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useRef, useEffect, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import * as Kalidokit from "kalidokit";
 import { mediaPipeService } from "../services/mediapipe";
 // import { RotationSmoother } from "../utils/math";
-import boneMap from "/public/avatars/AnimeGirlKawaii/AnimeGirlKawaii_BoneMap.json";
 import calculateArmAngles from "../utils/armAngles";
+
+
 
 interface AvatarRigProps {
     videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -14,6 +16,15 @@ interface AvatarRigProps {
 }
 
 export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
+    const [boneMap, setBoneMap] = useState<Record<string, any> | null>(null);
+
+    useEffect(() => {
+        fetch(`${import.meta.env.BASE_URL}avatars/AnimeGirlKawaii/AnimeGirlKawaii_BoneMap.json`)
+            .then((res) => res.json())
+            .then((data) => setBoneMap(data))
+            .catch((err) => console.error("Failed to load bone map:", err));
+    }, []);
+
     const frameRef = useRef(0);
 
     // Pose rest quaternions (CRITICAL)
@@ -29,9 +40,10 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
     // Cache pose rest rotations ONCE
     useEffect(() => {
         if (!isReady) return;
+        if (!boneMap) console.error("Bone map not found");
 
-        for (const bone in boneMap.Pose) {
-            const modelBone = nodes[boneMap.Pose[bone]];
+        for (const bone in boneMap?.Pose) {
+            const modelBone = nodes[boneMap?.Pose[bone as keyof typeof boneMap.Pose]];
             if (modelBone) {
                 poseRest.current[bone] = modelBone.quaternion.clone();
             }
@@ -40,7 +52,7 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
 
     useFrame(() => {
         const video = videoRef.current;
-        if (!isReady || !video) return;
+        if (!isReady || !video || !boneMap) return;
 
         frameRef.current++;
         const cycle = frameRef.current % 3;
@@ -90,14 +102,14 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
             );
 
             for (const bone in poseRig) {
-                if (!boneMap.Pose[bone]) continue;
+                if (!boneMap.Pose[bone as keyof typeof boneMap.Pose]) continue;
                 if (bone === "Hips" || bone.endsWith("Arm")) continue;
 
-                const boneNode = nodes[boneMap.Pose[bone]];
+                const boneNode = nodes[boneMap.Pose[bone as keyof typeof boneMap.Pose]];
                 const restQ = poseRest.current[bone];
                 if (!boneNode || !restQ) continue;
 
-                const r = poseRig[bone];
+                const r = poseRig[bone as keyof typeof poseRig] as any;
 
                 // DO NOT swap axes
                 const euler = new THREE.Euler(
@@ -115,11 +127,11 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
 
             const armRotations = calculateArmAngles(poseResult.worldLandmarks[0]);
             for (const bone in armRotations) {
-                const boneNode = nodes[boneMap.Pose[bone]];
+                const boneNode = nodes[boneMap.Pose[bone as keyof typeof boneMap.Pose]];
                 // const restQ = poseRest.current[bone];
                 if (!boneNode) continue;
 
-                const r = armRotations[bone];
+                const r = (armRotations as any)[bone];
 
                 const euler = new THREE.Euler(
                     THREE.MathUtils.degToRad(r.x),
@@ -152,13 +164,15 @@ export function useAvatarRig({ videoRef, nodes, isReady }: AvatarRigProps) {
                 const isRight = side === "Right";
 
                 for (const bone in solved) {
-                    const boneName = boneMap.Hand?.[side]?.[bone];
+                    const typedSide = side as keyof typeof boneMap.Hand;
+                    const handSide = boneMap.Hand?.[typedSide] as any;
+                    const boneName = handSide?.[bone];
                     if (!boneName) continue;
 
                     const handBone = nodes[boneName] as THREE.Bone;
                     if (!handBone) continue;
 
-                    const r = solved[bone];
+                    const r = (solved as any)[bone];
 
                     const euler = new THREE.Euler(
                         isRight ? -r.z : r.z,

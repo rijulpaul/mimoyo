@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     FaceLandmarker,
     HandLandmarker,
@@ -6,9 +7,9 @@ import {
 } from "@mediapipe/tasks-vision";
 
 export interface DetectionResults {
-    face?: object;
-    hand?: object;
-    pose?: object;
+    face?: any;
+    hand?: any;
+    pose?: any;
 }
 
 class MediaPipeService {
@@ -76,17 +77,17 @@ class MediaPipeService {
         }
     }
 
-    trackFace(videoElement: HTMLVideoElement): object | null {
+    trackFace(videoElement: HTMLVideoElement): any {
         if (!this.faceLandmarker || !this.canTrack(videoElement)) return null;
         return this.faceLandmarker.detectForVideo(videoElement, performance.now());
     }
 
-    trackHand(videoElement: HTMLVideoElement): object | null {
+    trackHand(videoElement: HTMLVideoElement): any {
         if (!this.handLandmarker || !this.canTrack(videoElement)) return null;
         return this.handLandmarker.detectForVideo(videoElement, performance.now());
     }
 
-    trackPose(videoElement: HTMLVideoElement): object | null {
+    trackPose(videoElement: HTMLVideoElement): any {
         if (!this.poseLandmarker || !this.canTrack(videoElement)) return null;
         return this.poseLandmarker.detectForVideo(videoElement, performance.now());
     }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * MediaPipe Pose Arm Angle Calculator
  * 
@@ -8,11 +9,11 @@
  * @returns {Object} Bone rotations with x, y, z angles in degrees
  */
 
-function calculateArmAngles(landmarks) {
+function calculateArmAngles(landmarks: any) {
     /**
      * Get 3D coordinates from landmark
      */
-    function getLandmark3D(index) {
+    function getLandmark3D(index: number) {
         const lm = landmarks[index];
         return {
             x: lm.x,
@@ -24,7 +25,7 @@ function calculateArmAngles(landmarks) {
     /**
      * Vector subtraction: a - b
      */
-    function vectorSubtract(a, b) {
+    function vectorSubtract(a: any, b: any) {
         return {
             x: a.x - b.x,
             y: a.y - b.y,
@@ -35,14 +36,14 @@ function calculateArmAngles(landmarks) {
     /**
      * Vector magnitude (length)
      */
-    function vectorMagnitude(v) {
+    function vectorMagnitude(v: any) {
         return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     }
 
     /**
      * Normalize vector (make unit length)
      */
-    function vectorNormalize(v) {
+    function vectorNormalize(v: any) {
         const mag = vectorMagnitude(v);
         if (mag === 0) return { x: 0, y: 0, z: 0 };
         return {
@@ -55,14 +56,14 @@ function calculateArmAngles(landmarks) {
     /**
      * Dot product of two vectors
      */
-    function vectorDot(a, b) {
+    function vectorDot(a: any, b: any) {
         return a.x * b.x + a.y * b.y + a.z * b.z;
     }
 
     /**
      * Cross product of two vectors
      */
-    function vectorCross(a, b) {
+    function vectorCross(a: any, b: any) {
         return {
             x: a.y * b.z - a.z * b.y,
             y: a.z * b.x - a.x * b.z,
@@ -73,7 +74,7 @@ function calculateArmAngles(landmarks) {
     /**
      * Calculate Euler angles (XYZ) from bone direction vector
      */
-    function getEulerAngles(origin, point) {
+    function getEulerAngles(origin: any, point: any) {
         const direction = vectorNormalize(vectorSubtract(point, origin));
 
         // Yaw (Y-axis rotation) - horizontal rotation
@@ -96,7 +97,7 @@ function calculateArmAngles(landmarks) {
     /**
      * Calculate local rotation of child bone relative to parent bone
      */
-    function calculateLocalRotation(parentStart, parentEnd, childStart, childEnd) {
+    function calculateLocalRotation(parentStart: any, parentEnd: any, childStart: any, childEnd: any) {
         // Parent bone direction
         const parentDir = vectorNormalize(vectorSubtract(parentEnd, parentStart));
 

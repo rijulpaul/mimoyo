@@ -7,7 +7,7 @@ interface UserAvatarProps {
 }
 
 function UserAvatar({ videoRef, isCameraReady }: UserAvatarProps) {
-    const { scene: avatar, nodes } = useGLTF("/avatars/AnimeGirlKawaii/AnimeGirlKawaii.glb");
+    const { scene: avatar, nodes } = useGLTF(`${import.meta.env.BASE_URL}avatars/AnimeGirlKawaii/AnimeGirlKawaii.glb`);
 
     useAvatarRig({
         videoRef,
