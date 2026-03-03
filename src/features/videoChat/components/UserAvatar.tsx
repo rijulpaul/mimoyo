@@ -1,6 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useAvatarRig } from "../hooks/useAvatarRig";
 
+
 interface UserAvatarProps {
     videoRef: React.RefObject<HTMLVideoElement | null>;
     isCameraReady: boolean;

@@ -13,9 +13,9 @@ function App() {
         <div style={{ width: onCall ? "50%" : "100%", borderColor: "skyblue", borderWidth: "2px", borderStyle: "solid", borderRadius: "1rem" }}>
           <UserVideo />
         </div>
-        <div style={{ width: onCall ? "50%" : "0%", borderColor: "plum", borderWidth: "2px", borderStyle: "solid", borderRadius: "1rem" }}>
+        {onCall && <div style={{ width: onCall ? "50%" : "0%", borderColor: "plum", borderWidth: "2px", borderStyle: "solid", borderRadius: "1rem" }}>
           {/* <UserVideo /> */}
-        </div>
+        </div>}
       </div>
     </div>
   )

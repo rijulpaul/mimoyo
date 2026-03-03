@@ -11,7 +11,7 @@ function ChatEnvironment() {
 
     return (
         <>
-            <color attach="background" args={["#1a1a1f"]} />
+            <color attach="background" args={["#0f0f12"]} />
             <ambientLight intensity={1} />
         </>
     )
