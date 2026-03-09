@@ -1,6 +1,6 @@
 import React from "react";
 import "./StartChatSection.css";
-import avatarImage from "../../assets/3.png";
+import logo from "../../assets/3.png";
 
 const StartChatSection: React.FC<{ onStart: () => void }> = ({ onStart }) => {
     return (
@@ -9,7 +9,7 @@ const StartChatSection: React.FC<{ onStart: () => void }> = ({ onStart }) => {
             <div className="container">
 
                 <div className="header">
-                    <h1 className="title"><img className="title" src={avatarImage} alt="Avatar" /></h1>
+                    <h1 className="title"><img className="title" src={logo} alt="Avatar" /></h1>
                     <p className="subtitle">
                         Real-time 3D avatar chat powered by AI-based body tracking.
                         <br style={{ marginBottom: "0.5rem" }} />
