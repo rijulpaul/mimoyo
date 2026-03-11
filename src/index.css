@@ -2,8 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Varela Round', sans-serif;
+    font-family: 'Coiny', sans-serif;
     z-index: 10;
+    color: white;
 }
 
 @font-face {

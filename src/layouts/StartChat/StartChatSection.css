@@ -101,7 +101,7 @@
     color: #6f6f78;
 }
 
-.button {
+.chat-button {
     margin-top: 8px;
     background: linear-gradient(45deg, rgba(255, 97, 255, 0.864), rgba(54, 170, 215, 0.903));
     border: rgb(221, 149, 14) solid 3px;
@@ -118,11 +118,11 @@
     transition: all 0.2s ease, transform 0.1s ease;
 }
 
-.button:hover {
+.chat-button:hover {
     transform: scale(1.02);
 }
 
-.button:active {
+.chat-button:active {
     transform: scale(0.98);
 }
 

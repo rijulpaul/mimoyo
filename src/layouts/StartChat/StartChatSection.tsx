@@ -30,7 +30,7 @@ const StartChatSection: React.FC<{ onStart: () => void }> = ({ onStart }) => {
                 </div>
 
                 <div>
-                    <button className="button" onClick={onStart}>
+                    <button className="chat-button" onClick={onStart}>
                         Start Chat
                     </button>
 
