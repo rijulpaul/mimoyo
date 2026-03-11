@@ -1,84 +1,233 @@
-import { useNavigate } from 'react-router-dom'
-import logo from '../../assets/3.png'
-import Button from '../../components/Button.tsx'
+import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/3.png';
+import Button from '../../components/Button.tsx';
 import BackgroundGradient from '../../components/BackgroundGradient.tsx';
 import InfoCard from '../../components/InfoCards.tsx';
+import './Home.css';
+
+// ─── Data ──────────────────────────────────────────────────────────────────────
+
+const FEATURES = [
+    {
+        heading: 'Real-time motion capture',
+        content:
+            'Your facial expressions, hand gestures, and body movements instantly animate your avatar in three dimensions.',
+    },
+    {
+        heading: 'Complete anonymity',
+        content:
+            'No accounts, no profiles, no data collection. Chat freely knowing your identity remains protected at all times.',
+    },
+    {
+        heading: 'Browser-based access',
+        content:
+            'No downloads or installations required. Open Mimoyo in any modern web browser and start connecting immediately.',
+    },
+    {
+        heading: 'Instant connections',
+        content:
+            'Get paired with random users worldwide in seconds. Each conversation is fresh, unpredictable, and entirely unique.',
+    },
+];
+
+const HOW_IT_WORKS = [
+    {
+        heading: 'Pick your avatar',
+        content:
+            'Choose from a selection of digital characters that will represent you in the conversation.',
+    },
+    {
+        heading: 'Grant permissions',
+        content:
+            'Allow access to your camera and microphone so the motion tracking can capture your movements.',
+    },
+    {
+        heading: 'Meet and chat',
+        content:
+            "You're instantly connected with a stranger across the globe, both hidden behind your chosen avatars.",
+    },
+];
+
+const FOOTER_PRODUCT_LINKS = ['How it works', 'Features', 'FAQ', 'Blog', 'Company'];
+const FOOTER_ABOUT_LINKS = ['Contact', 'Careers', 'Press', 'Legal', 'Privacy Policy'];
+const FOOTER_LEGAL_LINKS = ['Cookie settings', 'Accessibility', 'Status', 'Resources'];
+
+// ─── Component ─────────────────────────────────────────────────────────────────
+
 export default function Home() {
     const navigate = useNavigate();
 
+    const goToChat = () => navigate('/chat');
+
     return (
-        <div>
+        <div className="home-root">
             <BackgroundGradient />
-            <header style={{
-                // position: "fixed",
-                display: "flex", zIndex: "12", justifyContent: "space-between", paddingBottom: "1rem", width: "100vw"
-            }}>
-                <div style={{
-                    // background: "linear-gradient(var(--dark), #141418aa 60%, transparent)",
-                    // background: "black"
-                    zIndex: "0", position: "absolute", top: "0", width: "100%", height: "20vh"
-                }}></div>
-                <div className="logo">
-                    <img src={logo} alt="logo" style={{ height: "20vh", padding: "0 2rem" }} />
-                    {/* <p style={{
-                        fontFamily: "Balonku",
-                        background: "var(--gradient)",
-                        backgroundClip: "text",
-                        color: "transparent",
-                        fontSize: "4rem",
-                    }}>
-                        MIMOYO
-                    </p> */}
+
+            {/* ── Header ── */}
+            <header className="home-header">
+                <div className="home-logo">
+                    <img src={logo} alt="Mimoyo logo" />
                 </div>
-                <div>
-                    a
-                </div>
+                <nav aria-label="Primary navigation" />
             </header>
+
+            {/* ── Hero ── */}
             <main>
-                <div className="hero" style={{ display: "flex", paddingTop: "16vh" }}>
-                    <div className="hero-content" style={{ color: "white", width: "50vw", padding: "2rem 0 2.5rem 2.5rem" }}>
+                <div className="hero">
+                    <div className="hero-content">
                         <div>
-                            <h1 style={{ fontSize: "5rem", lineHeight: "0.9" }}>
+                            <h1>
                                 Meet anyone,
                                 <br />
                                 be anyone,
                                 <br />
                                 stay anonymous
                             </h1>
-                            <br />
-                            <p style={{ fontFamily: "'Coiny', sans-serif", fontSize: "1.4rem", lineHeight: "1.5", width: "90%", paddingTop: "1rem", paddingLeft: "12px" }}>
-                                Connect with strangers through lifelike avatars powered by real-time motion tracking.
-                                Your face, hands, and movements control your digital presence while you remain completely anonymous.
+                            <p>
+                                Connect with strangers through lifelike avatars powered by
+                                real-time motion tracking. Your face, hands, and movements
+                                control your digital presence while you remain completely
+                                anonymous.
                             </p>
-                            <br />
                         </div>
-                        <div style={{ display: "flex", flexDirection: "row", gap: "2rem", paddingTop: "5.5rem" }}>
-                            <Button gradient={true} text='Get Started' onClick={() => navigate("/chat")} />
-                            <Button text='How it works' />
+                        <div className="hero-actions">
+                            <Button gradient text="Get Started" onClick={goToChat} />
+                            <Button text="How it works" />
                         </div>
                     </div>
 
-                    <div className="hero-image" style={{ width: "50vw", overflow: "hidden" }}>
-                        {/* <img src={logo} alt="hero" /> */}
+                    <div className="hero-image">
+                        <img src={logo} alt="Avatar demo preview" />
                     </div>
                 </div>
-            </main >
-            <section style={{ height: "100vh", width: "100vw", justifyContent: "space-evenly", alignItems: "center", textAlign: "center", padding: "2.5rem" }}>
-                <h1 style={{ fontSize: "4rem", lineHeight: "0.9", width: "50vw", margin: "0 auto", padding: "1rem 0" }}>
-                    What makes Mimoyo different?
-                </h1>
-                <p style={{ fontSize: "1.4rem", lineHeight: "1.2", width: "60vw", margin: "0 auto", padding: "1rem 0" }}>Experience genuine connection without revealing your identity. Our platform bridges the gap between anonymous chat and authentic human interaction.</p>
-                <div style={{ display: "flex", flexDirection: "row", paddingTop: "2rem" }}>
-                    <InfoCard heading="Real-time motion capture" content="Your facial expressions, hand gestures, and body movements instantly animate your avatar in three dimensions." image={logo} />
-                    <InfoCard heading="Complete anonymity" content="No accounts, no profiles, no data collection. Chat freely knowing your identity remains protected at all times." image={logo} />
-                    <InfoCard heading="Browser-based access" content="No downloads or installations required. Open Mimoyo in any modern web browser and start connecting immediately." image={logo} />
-                    <InfoCard heading="Instant connections" content="Get paired with random users worldwide in seconds. Each conversation is fresh, unpredictable, and entirely unique." image={logo} />
+            </main>
+
+            {/* ── Features ── */}
+            <section className="home-section" aria-labelledby="features-heading">
+                <h2 id="features-heading">What makes Mimoyo different?</h2>
+                <p>
+                    Experience genuine connection without revealing your identity. Our
+                    platform bridges the gap between anonymous chat and authentic human
+                    interaction.
+                </p>
+                <div className="home-section-cards">
+                    {FEATURES.map(({ heading, content }) => (
+                        <InfoCard key={heading} heading={heading} content={content} image={logo} />
+                    ))}
                 </div>
-                <div style={{ padding: "1rem" }}>
-                    <Button text='try it' />
+                <div className="home-section-cta">
+                    <Button text="Try it" onClick={goToChat} />
                 </div>
             </section>
-            {/* <footer style={{ top: "100%", transform: "Translate(0,-100%)", position: "fixed", display: "flex", zIndex: "1000", justifyContent: "center", paddingBottom: "1rem", background: "linear-gradient(rgba(255, 255, 255, 0),var(--dark))", width: "100vw", height: "20vh" }}></footer> */}
-        </div >
-    )
+
+            {/* ── How it works ── */}
+            <section className="home-section" aria-labelledby="how-it-works-heading">
+                <h2 id="how-it-works-heading">Three steps to start chatting</h2>
+                <p>
+                    Getting connected takes seconds. Select an avatar, allow camera access,
+                    and you&apos;re paired with someone new. The whole thing happens in your
+                    browser without any setup.
+                </p>
+                <div className="home-section-cards">
+                    {HOW_IT_WORKS.map(({ heading, content }) => (
+                        <InfoCard key={heading} heading={heading} content={content} image={logo} />
+                    ))}
+                </div>
+                <div className="home-section-cta">
+                    <Button text="Start" onClick={goToChat} />
+                </div>
+            </section>
+
+            {/* ── Live demo ── */}
+            <section className="home-section" aria-labelledby="demo-heading">
+                <h2 id="demo-heading">See it live</h2>
+                <p>Watch avatars move and react in real time</p>
+                <div className="demo-media">
+                    <img src={logo} alt="Live avatar demo" />
+                </div>
+            </section>
+
+            {/* ── Bottom CTA ── */}
+            <section className="cta-section" aria-label="Call to action">
+                <div className="cta-content">
+                    <div>
+                        <h2>Ready to meet someone new?</h2>
+                        <p>Join thousands of users connecting through avatars right now</p>
+                    </div>
+                    <div className="cta-actions">
+                        <Button gradient text="Chat Now" onClick={goToChat} />
+                    </div>
+                </div>
+                <div className="cta-image">
+                    <img src={logo} alt="Two avatars in conversation" />
+                </div>
+            </section>
+
+            {/* ── Footer ── */}
+            <footer>
+                <div className="footer-top">
+                    <div className="footer-logo">
+                        <img src={logo} alt="Mimoyo logo" />
+                    </div>
+
+                    <div className="footer-col">
+                        <div className="footer-col-heading">Product</div>
+                        <div>
+                            {FOOTER_PRODUCT_LINKS.map((link) => (
+                                <div key={link} className="footer-link">{link}</div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="footer-col">
+                        <div className="footer-col-heading">About Us</div>
+                        <div>
+                            {FOOTER_ABOUT_LINKS.map((link) => (
+                                <div key={link} className="footer-link">{link}</div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="footer-col">
+                        <div className="footer-col-heading">Terms of Service</div>
+                        <div>
+                            {FOOTER_LEGAL_LINKS.map((link) => (
+                                <div key={link} className="footer-link">{link}</div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="footer-newsletter">
+                        <div className="footer-col-heading">Updates</div>
+                        <div className="footer-newsletter-desc">
+                            Get notified when we launch new features and improvements.
+                        </div>
+                        <div className="footer-newsletter-form">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                aria-label="Email address for newsletter"
+                            />
+                            <Button text="Subscribe" />
+                        </div>
+                        <div className="footer-disclaimer">
+                            By subscribing you agree to our Privacy Policy and consent to
+                            receive updates.
+                        </div>
+                    </div>
+                </div>
+
+                <hr className="footer-divider" />
+
+                <div className="footer-bottom">
+                    <div>
+                        <span>© 2025 Mimoyo Virtual Avatar Chat. All rights reserved.</span>
+                        <span>Terms of Use</span>
+                        <span>Privacy Policy</span>
+                        <span>Cookie Policy</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    );
 }
